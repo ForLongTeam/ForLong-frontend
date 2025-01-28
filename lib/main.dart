@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:forlong/screens/main_screens.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'models/hospital.dart';
-import 'screens/hospital_detail_screen.dart';
+import 'screens/hospital/hospital_detail_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      home: HospitalListScreen(),
+      home: MainScreens(),
     );
   }
 }

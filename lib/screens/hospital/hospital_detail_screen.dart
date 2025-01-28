@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:forlong/screens/reservation_screen.dart';
+import 'package:forlong/screens/hospital/reservation_screen.dart';
 import '../../models/hospital.dart';
-import '../widgets/custom_widgets.dart';
+import '../../widgets/custom_widgets.dart';
 
 class HospitalDetailScreen extends StatefulWidget {
   final Hospital hospital; // 병원 정보 모델
