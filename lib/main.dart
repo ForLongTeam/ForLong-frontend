@@ -1,14 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_naver_map/flutter_naver_map.dart';
+import 'package:forlong/screens/hospital_search_screen.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'models/hospital.dart';
-import 'screens/hospital_detail_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await NaverMapSdk.instance.initialize(
+    clientId: '29brsoczm8',  // 여기에 네이버 클라이언트 ID를 입력하세요.
+    onAuthFailed: (exception) {
+      print('네이버 지도 인증 실패: $exception');
+    },
+  );
+
   await initializeDateFormatting('ko_KR', null);
   runApp(const MyApp());
 }
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -27,53 +36,7 @@ class MyApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      home: HospitalListScreen(),
-    );
-  }
-}
-
-class HospitalListScreen extends StatelessWidget {
-  final List<Hospital> hospitals = [
-    Hospital(
-      name: "가디언동물의료센터",
-      location: "서울 서초구 방배로 110 2층 201호",
-      phone: "02-442-8287",
-      website: "guardian-amc.com",
-      status: "진료중",
-      region: "서초구",
-      imageUrl: "https://via.placeholder.com/600x400",
-      description: "최고의 동물 의료 서비스를 제공합니다.",
-      rating: 4.5,
-      distance: 2.3,  // 병원까지의 거리 (예: km 단위)
-      hours: "10:00 - 20:00",  // 운영 시간
-      isOpen: true,  // 영업 중 여부
-      openingHours: "10:00 AM - 8:00 PM",  // 상세 운영 시간
-    )
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text("병원 목록")),
-      body: ListView.builder(
-        itemCount: hospitals.length,
-        itemBuilder: (context, index) {
-          final hospital = hospitals[index];
-          return ListTile(
-            title: Text(hospital.name),
-            subtitle: Text(hospital.location),
-            leading: Image.network(hospital.imageUrl, width: 50, height: 50, fit: BoxFit.cover),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => HospitalDetailScreen(hospital: hospital),
-                ),
-              );
-            },
-          );
-        },
-      ),
+      home: HospitalSearchScreen(),
     );
   }
 }

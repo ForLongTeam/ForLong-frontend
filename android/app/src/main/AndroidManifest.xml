@@ -1,4 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-feature
+        android:name="android.hardware.telephony"
+        android:required="false" />
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+
     <application
         android:label="forlong"
         android:name="${applicationName}"
@@ -31,6 +37,9 @@
             android:name="flutterEmbedding"
             android:value="2" />
     </application>
+        <meta-data
+            android:name="com.naver.maps.clientId"
+            android:value="29brsoczm8"/>
     <!-- Required to query activities that can process text, see:
          https://developer.android.com/training/package-visibility and
          https://developer.android.com/reference/android/content/Intent#ACTION_PROCESS_TEXT.
