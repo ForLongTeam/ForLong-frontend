@@ -3,6 +3,8 @@ class Hospital {
   final String status;
   final String region;
   final String location;
+  final double latitude;
+  final double longitude;
   final String phone;
   final String website;
   final String imageUrl;
@@ -12,10 +14,13 @@ class Hospital {
   final String hours;
   final bool isOpen;
   final String openingHours;
+  String? markerImagePath; // 마커 이미지 경로 (nullable)
 
   Hospital({
     required this.name,
     required this.location,
+    required this.latitude,
+    required this.longitude,
     required this.phone,
     required this.website,
     required this.imageUrl,
@@ -27,5 +32,6 @@ class Hospital {
     required this.region,
     required this.status,
     required this.openingHours,
+    this.markerImagePath,
   });
 }

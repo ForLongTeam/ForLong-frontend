@@ -45,5 +45,26 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+
+	<!-- 네이버 지도 API 클라이언트 ID 추가 -->
+	<key>NMFClientId</key>
+	<string>29brsoczm8</string>
+
+	<!-- 네트워크 보안 설정 -->
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
+
+	<!-- 위치 권한 설정 -->
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>앱이 실행 중일 때 위치 정보를 사용하기 위해 필요합니다.</string>
+
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>백그라운드에서도 위치 정보를 사용하기 위해 필요합니다.</string>
+
+	<key>NSPhoneUsageDescription</key>
+    <string>이 앱은 전화를 걸기 위해 전화 기능을 사용합니다.</string>
 </dict>
 </plist>

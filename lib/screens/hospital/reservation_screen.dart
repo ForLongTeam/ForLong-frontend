@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
-import '../../../models/hospital.dart';
-import '../../widgets/hospital_info_card.dart';
+import '../../models/hospital.dart';
+import '../widgets/hospital_info_card.dart';
+import 'hospital_search_screen.dart';
 
 class ReservationScreen extends StatefulWidget {
   final Hospital hospital;
@@ -98,7 +99,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
                   TableCalendar(
                     locale: 'ko_KR',  // 한국어 로케일 설정
                     firstDay: DateTime.utc(2020, 1, 1),
-                    lastDay: DateTime.utc(2030, 12, 31),
+                    lastDay: DateTime.utc(2100, 12, 31),
                     focusedDay: _focusedDay,
                     calendarFormat: CalendarFormat.month,
                     headerVisible: false,  // 상단 기본 헤더 제거
@@ -203,7 +204,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
       {'time': '19:00', 'available': true},
     ];
 
-    showModalBottomSheet(
+    showModalBottomSheet<String>(
       context: context,
       backgroundColor: Colors.white,
       shape: RoundedRectangleBorder(
@@ -222,9 +223,9 @@ class _ReservationScreenState extends State<ReservationScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 14.0),  // 왼쪽 패딩 추가
-                        child: const Text(
+                      const Padding(
+                        padding: EdgeInsets.only(left: 14.0), // 왼쪽 패딩 추가
+                        child: Text(
                           '예약 시간',
                           style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
                         ),
@@ -255,18 +256,12 @@ class _ReservationScreenState extends State<ReservationScreen> {
                       bool isSelected = tempSelectedTime == time;
 
                       return GestureDetector(
-                        onTap: available
-                            ? () {
-                          setState(() {
-                            tempSelectedTime = time;
-                          });
-                        }
-                            : null,
+                        onTap: available ? () => setState(() => tempSelectedTime = time) : null,
                         child: Container(
                           padding: EdgeInsets.symmetric(horizontal: 16),
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
-                            color:isSelected ? Color(0xff1bb881).withOpacity(0.2): Colors.white,
+                            color: isSelected ? Color(0xff1bb881).withOpacity(0.2) : Colors.white,
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: Row(
@@ -275,9 +270,11 @@ class _ReservationScreenState extends State<ReservationScreen> {
                                 child: Text(
                                   time,
                                   style: TextStyle(
-                                    color: available ? (isSelected ? Color(0xff1bb881) : Color(0xff898d99)) : Color(0xffe1e1e1),
+                                    color: available
+                                        ? (isSelected ? Color(0xff1bb881) : Color(0xff898d99))
+                                        : Color(0xffe1e1e1),
                                     fontWeight: FontWeight.normal,
-                                    fontSize: 20
+                                    fontSize: 20,
                                   ),
                                 ),
                               ),
@@ -294,15 +291,11 @@ class _ReservationScreenState extends State<ReservationScreen> {
                   ),
                   const SizedBox(height: 10),
                   ElevatedButton(
-                    onPressed:
-                    tempSelectedTime != null
+                    onPressed: tempSelectedTime != null
                         ? () {
-                      setState(() {
-                        _selectedTime = tempSelectedTime!;
-                      });
-                      Navigator.pop(context);
+                      Navigator.pop(context, tempSelectedTime); // 모달 닫으면서 선택 시간 전달
                     }
-                    : null,
+                        : null,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: tempSelectedTime != null ? Color(0xff1bb881) : Colors.grey,
                       minimumSize: Size(double.infinity, 50),
@@ -313,15 +306,22 @@ class _ReservationScreenState extends State<ReservationScreen> {
                       style: TextStyle(color: Colors.white, fontSize: 16),
                     ),
                   ),
-
                 ],
               ),
             );
           },
         );
       },
-    );
+    ).then((selectedTime) {
+      if (selectedTime != null) {
+        setState(() {
+          _selectedTime = selectedTime;
+        });
+      }
+    });
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -361,7 +361,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
             onPressed: () => Navigator.pop(context),
           ),
           const Padding(
-            padding: EdgeInsets.only(left: 14),
+            padding: EdgeInsets.only(left: 14, top: 10),
             child: Text(
               '예약하기',
               style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
@@ -420,11 +420,11 @@ class _ReservationScreenState extends State<ReservationScreen> {
 
   Widget _buildSelectionRow(String title, String value, Function(String) onSelect) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6.0),
+      padding: const EdgeInsets.symmetric(vertical: 2.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(title, style: const TextStyle(fontSize: 16)),
+          Text(title, style: const TextStyle(fontSize: 14)),
           TextButton(
             onPressed: () => _selectOption(title, onSelect),
             child: Text(value, style: const TextStyle(color: Color(0xff1bb881), fontWeight: FontWeight.bold)),
@@ -438,7 +438,14 @@ class _ReservationScreenState extends State<ReservationScreen> {
       child: Padding(
         padding: const EdgeInsets.all(15.0),
         child: ElevatedButton(
-          onPressed: _isAgreed ? () {} : null,
+          onPressed: _isAgreed ? () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => HospitalSearchScreen(),
+              ),
+            );
+          } : null,
           style: ElevatedButton.styleFrom(
             backgroundColor: _isAgreed ? Color(0xff1bb881) : Colors.grey,
             minimumSize: const Size(double.infinity, 50),
