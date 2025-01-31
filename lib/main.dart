@@ -5,7 +5,7 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'models/hospital.dart';
 import 'screens/hospital/hospital_detail_screen.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
-import 'package:forlong/screens/hospital_search_screen.dart';
+import 'package:forlong/screens/hospital/hospital_search_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -4,6 +4,7 @@ import 'package:forlong/main.dart';
 import 'package:forlong/screens/community/community_screen.dart';
 import 'package:forlong/screens/feed/feed_screen.dart';
 import 'package:forlong/screens/home/home_screen.dart';
+import 'package:forlong/screens/hospital/hospital_search_screen.dart';
 import 'package:forlong/screens/shop/shop_screen.dart';
 
 class MainScreens extends StatefulWidget {
@@ -21,7 +22,7 @@ class _MainScreensState extends State<MainScreens> {
         index: _selectedIndex,
         children: [
           HomeScreen(),
-          HospitalListScreen(),
+          HospitalSearchScreen(),
           ShopScreen(),
           FeedScreen(),
           CommunityScreen()

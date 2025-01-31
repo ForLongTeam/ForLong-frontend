@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
-import 'package:forlong/screens/reservation_screen.dart';
-import '../models/hospital.dart';
+import 'package:forlong/screens/hospital/reservation_screen.dart';
+import '../../models/hospital.dart';
 import 'dart:ui' as ui;
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';

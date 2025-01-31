@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
 import '../../models/hospital.dart';
-import '../widgets/hospital_info_card.dart';
+import '../../widgets/hospital_info_card.dart';
 import 'hospital_search_screen.dart';
 
 class ReservationScreen extends StatefulWidget {
