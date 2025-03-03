@@ -1,0 +1,33 @@
+{
+  "loginid": null,
+  "nickname": "귤귤무슨귤",
+  "email": "test@example.com",
+  "phone": "010-1234-5678",
+  "role": "user",
+  "provider": "kakao",
+  "provider_id": "kakao_67890",
+  "profile_image": "https://i1.sndcdn.com/artworks-3xTZ9qXRiUvC1K2F-AGZFpQ-t500x500.jpg",
+  "address": "서울특별시 강남구 테헤란로 123",
+  "pets": [
+    {
+      "name": "태연이",
+      "type": "강아지",
+      "gender": "암컷",
+      "age_years": 3,
+      "age_months": 6,
+      "weight": 4.2,
+      "pet_image": "https://example.com/dog.jpg",
+      "is_representative":false
+    },
+    {
+      "name": "냥냥이",
+      "type": "고양이",
+      "gender": "수컷",
+      "age_years": 2,
+      "age_months": 3,
+      "weight": 3.5,
+      "pet_image": "https://example.com/cat.jpg",
+      "is_representative": false
+    }
+  ]
+}

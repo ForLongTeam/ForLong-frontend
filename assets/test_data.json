@@ -1,0 +1,66 @@
+{
+  "recentVetReplies": [
+    {
+      "post_id": "1",
+      "title": "강아지가 계속 긁어요, 원인이 뭘까요?",
+      "content": "강아지가 최근 들어 계속 긁어요. 알러지일까요?",
+      "user_id": "doctor_123",
+      "author_name": "수의사 김철수",
+      "author_profile_url": "https://example.com/profile1.jpg",
+      "image_url": null,
+      "created_at": "2024-02-01T12:00:00Z",
+      "likes": 12,
+      "comment_count": 4,
+      "views": 120,
+      "tags": ["강아지", "피부"],
+      "is_pinned": false
+    },
+    {
+      "post_id": "3",
+      "title": "강아지가 설사를 해요",
+      "content": "강아지가 하루 종일 설사를 하는데 병원에 가야 할까요?",
+      "user_id": "doctor_789",
+      "author_name": "수의사 이민호",
+      "author_profile_url": "https://example.com/profile3.jpg",
+      "image_url": null,
+      "created_at": "2024-02-05T10:20:00Z",
+      "likes": 18,
+      "comment_count": 6,
+      "views": 250,
+      "tags": ["강아지", "소화"],
+      "is_pinned": true
+    }
+  ],
+  "hotIssues": [
+    {
+      "post_id": "2",
+      "title": "강아지 산책할 때 좋은 장소 추천!",
+      "content": "서울 근처 강아지와 함께 산책하기 좋은 곳 추천드려요.",
+      "user_id": "user_456",
+      "author_name": "박지수",
+      "author_profile_url": "https://example.com/profile2.jpg",
+      "image_url": "https://example.com/walk.jpg",
+      "created_at": "2024-01-30T15:30:00Z",
+      "likes": 25,
+      "comment_count": 10,
+      "views": 450,
+      "tags": ["강아지", "산책"],
+      "is_pinned": false
+    },
+    {
+      "post_id": "4",
+      "title": "반려동물 등록제, 어떻게 생각하세요?",
+      "content": "반려동물 등록제가 강화되는데, 여러분의 의견이 궁금해요.",
+      "user_id": "user_999",
+      "author_name": "김유진",
+      "author_profile_url": "https://example.com/profile4.jpg",
+      "image_url": "https://example.com/pet_reg.jpg",
+      "created_at": "2024-02-07T08:45:00Z",
+      "likes": 32,
+      "comment_count": 14,
+      "views": 680,
+      "tags": ["반려동물", "등록제"],
+      "is_pinned": false
+    }
+  ]
+}

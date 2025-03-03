@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "953553134553",
+    "project_id": "forlong-5d60d",
+    "storage_bucket": "forlong-5d60d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:953553134553:android:3902cd38b6c749554bafc8",
+        "android_client_info": {
+          "package_name": "com.example.forlong"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB6P2zOF4JNWaxMBZI8GAZxU2uP97XARAA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

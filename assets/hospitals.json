@@ -1,0 +1,25 @@
+[
+  {
+    "name": "테스트 동물병원",
+    "status": "운영중",
+    "region": "서울",
+    "location": "서울특별시 강남구",
+    "latitude": 37.498095,
+    "longitude": 127.027610,
+    "phone": "02-1234-5678",
+    "website": "http://example.com",
+    "imageUrl": "https://via.placeholder.com/150",
+    "description": "서울 강남구에 위치한 테스트 동물병원입니다.",
+    "rating": 4.5,
+    "distance": 2.5,
+    "hours": "09:00 - 18:00",
+    "isOpen": true,
+    "openingHours": "09:00 - 18:00",
+    "availableTimes": [
+      { "date": "2025-02-01", "time": "10:00", "available": true },
+      { "date": "2025-02-01", "time": "11:00", "available": true },
+      { "date": "2025-02-01", "time": "14:00", "available": false },
+      { "date": "2025-02-02", "time": "16:00", "available": true }
+    ]
+  }
+]

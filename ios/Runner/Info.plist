@@ -56,7 +56,6 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
-
 	<!-- 위치 권한 설정 -->
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>앱이 실행 중일 때 위치 정보를 사용하기 위해 필요합니다.</string>

@@ -6,7 +6,7 @@ import '../../models/hospital.dart';
 import '../widgets/custom_widgets.dart';
 
 class HospitalDetailScreen extends StatefulWidget {
-  final Hospital hospital; // 병원 정보 모델
+  final Hospital hospital;
 
   const HospitalDetailScreen({super.key, required this.hospital});
 
@@ -15,25 +15,28 @@ class HospitalDetailScreen extends StatefulWidget {
 }
 
 class _HospitalDetailScreenState extends State<HospitalDetailScreen> {
-  bool isBookmarked = false; // 찜 여부 상태 변수
-  bool _isMapInteracting = false; // 지도 조작 여부 상태
+  bool isBookmarked = false;
+  bool _isMapInteracting = false;
   late NaverMapController _mapController;
 
   void _onMapReady(NaverMapController controller) {
-    setState(() {
-      _mapController = controller;
-      _addHospitalMarker(widget.hospital);
-    });
+    _mapController = controller;
+    _addHospitalMarker(widget.hospital);
   }
 
   void _addHospitalMarker(Hospital hospital) {
-    if (hospital.markerImagePath != null &&
-        hospital.markerImagePath!.isNotEmpty) {
+    if (hospital.markerImagePath != null && hospital.markerImagePath!.isNotEmpty) {
+      final file = File(hospital.markerImagePath!);
+
+      if (!file.existsSync()) {
+        print("🚨 마커 이미지 파일이 존재하지 않습니다: ${hospital.markerImagePath!}");
+        return;
+      }
+
       final marker = NMarker(
         id: hospital.name,
         position: NLatLng(hospital.latitude, hospital.longitude),
-        icon:
-            NOverlayImage.fromFile(File(hospital.markerImagePath!)), // 파일 경로 사용
+        icon: NOverlayImage.fromFile(file),
       );
 
       _mapController.addOverlay(marker);
@@ -43,10 +46,13 @@ class _HospitalDetailScreenState extends State<HospitalDetailScreen> {
           zoom: 16,
         ),
       );
+
+      print("✅ 마커 추가 완료: ${hospital.markerImagePath!}");
     } else {
-      print("마커 이미지 경로가 없습니다: ${hospital.name}");
+      print("🚨 마커 이미지 경로가 비어 있습니다.");
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -57,14 +63,12 @@ class _HospitalDetailScreenState extends State<HospitalDetailScreen> {
             child: Image.network(
               widget.hospital.imageUrl,
               fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) {
-                return const Center(
-                  child: Text(
-                    '이미지를 불러올 수 없습니다.',
-                    style: TextStyle(color: Colors.grey),
-                  ),
-                );
-              },
+              errorBuilder: (context, error, stackTrace) => const Center(
+                child: Text(
+                  '이미지를 불러올 수 없습니다.',
+                  style: TextStyle(color: Colors.grey),
+                ),
+              ),
             ),
           ),
           DraggableScrollableSheet(
@@ -73,10 +77,7 @@ class _HospitalDetailScreenState extends State<HospitalDetailScreen> {
             maxChildSize: 0.85,
             builder: (context, scrollController) {
               return NotificationListener<ScrollNotification>(
-                onNotification: (notification) {
-                  // 지도를 조작 중일 때 스크롤 이벤트를 막음
-                  return _isMapInteracting;
-                },
+                onNotification: (_) => _isMapInteracting,
                 child: Container(
                   decoration: const BoxDecoration(
                     color: Colors.white,
@@ -86,11 +87,8 @@ class _HospitalDetailScreenState extends State<HospitalDetailScreen> {
                     ),
                   ),
                   child: CustomScrollView(
-                    scrollDirection: Axis.vertical,
                     controller: scrollController,
-                    physics: _isMapInteracting
-                        ? const NeverScrollableScrollPhysics()
-                        : const BouncingScrollPhysics(),
+                    physics: _isMapInteracting ? const NeverScrollableScrollPhysics() : const BouncingScrollPhysics(),
                     slivers: [
                       SliverPadding(
                         padding: const EdgeInsets.all(16.0),
@@ -125,37 +123,24 @@ class _HospitalDetailScreenState extends State<HospitalDetailScreen> {
                               CustomWidgets.buildInfoRow('연락처', widget.hospital.phone),
                               CustomWidgets.buildInfoRow('홈페이지', widget.hospital.website, isLink: true),
                               const SizedBox(height: 12),
-                              const Text(
-                                '병원 정보',
-                                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                              ),
+                              const Text('병원 정보', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                               const SizedBox(height: 8),
-                              Text(
-                                widget.hospital.description,
-                                style: const TextStyle(color: Colors.grey),
-                              ),
+                              Text(widget.hospital.description, style: const TextStyle(color: Colors.grey)),
                               const SizedBox(height: 8),
                               Divider(color: Colors.grey[300]),
-                              const Text(
-                                '주소',
-                                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                              ),
+                              const Text('주소', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                               const SizedBox(height: 8),
                               Row(
                                 children: [
                                   const Icon(Icons.location_on, color: Color(0xff616a61), size: 18),
                                   const SizedBox(width: 8),
                                   Expanded(
-                                    child: Text(
-                                      widget.hospital.location,
-                                      style: const TextStyle(fontSize: 14, color: Colors.black87),
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
+                                    child: Text(widget.hospital.location, style: const TextStyle(fontSize: 14, color: Colors.black87), overflow: TextOverflow.ellipsis),
                                   ),
                                 ],
                               ),
                               const SizedBox(height: 14),
-                              // 네이버 지도 UI 추가
+                              // 네이버 지도 추가
                               Container(
                                 height: 400,
                                 decoration: BoxDecoration(
@@ -166,19 +151,9 @@ class _HospitalDetailScreenState extends State<HospitalDetailScreen> {
                                   borderRadius: BorderRadius.circular(15),
                                   child: GestureDetector(
                                     onScaleUpdate: (details) async {
-                                      final currentPosition = await _mapController.getCameraPosition();
-                                      double zoomAdjustmentFactor = 0.5;
-                                      double newZoom = currentPosition.zoom +
-                                          (details.scale - 1) * zoomAdjustmentFactor;
-
-                                      newZoom = newZoom.clamp(3.0, 21.0);
-
-                                      await _mapController.updateCamera(
-                                        NCameraUpdate.withParams(
-                                          target: currentPosition.target,
-                                          zoom: newZoom,
-                                        ),
-                                      );
+                                      final position = await _mapController.getCameraPosition();
+                                      double newZoom = (position.zoom + (details.scale - 1) * 0.5).clamp(3.0, 21.0);
+                                      await _mapController.updateCamera(NCameraUpdate.withParams(target: position.target, zoom: newZoom));
                                     },
                                     child: NaverMap(
                                       onMapReady: _onMapReady,
@@ -216,12 +191,7 @@ class _HospitalDetailScreenState extends State<HospitalDetailScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               IconButton(
-                onPressed: () {
-                  setState(() {
-                    isBookmarked = !isBookmarked;
-                  });
-                },
-                padding: const EdgeInsets.only(right: 15),
+                onPressed: () => setState(() => isBookmarked = !isBookmarked),
                 icon: Icon(
                   isBookmarked ? Icons.bookmark : Icons.bookmark_border,
                   size: 30,
@@ -232,24 +202,16 @@ class _HospitalDetailScreenState extends State<HospitalDetailScreen> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          ReservationScreen(hospital: widget.hospital),
-                    ),
-                  ); // 예약 기능 추가
+                    MaterialPageRoute(builder: (context) => ReservationScreen(hospital: widget.hospital)),
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xff1BB881),
                   minimumSize: const Size(290, 50),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                 ),
                 icon: const Icon(Icons.calendar_today, color: Colors.white),
-                label: const Text(
-                  '예약하기',
-                  style: TextStyle(fontSize: 16, color: Colors.white),
-                ),
+                label: const Text('예약하기', style: TextStyle(fontSize: 16, color: Colors.white)),
               ),
             ],
           ),
